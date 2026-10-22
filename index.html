@@ -256,6 +256,7 @@ main{flex:1 1 auto;min-width:0;padding:16px 22px 90px}
   function renderEps(){
     var nav="", main="";
     main = '<div class="banner"><b>种子工程 · 第一卷（第 1—12 集）</b> '+
+      '<b>次写实</b> · 暖调明亮高饱和喜剧。'+
       '每条提示词含【景别 / 机位 / 人物 / 场景 / 挂图 / 画面 / 光影 / 声音 / 负面】九字段。'+
       '台词原文只在声音栏写一次（配音色语速语气），画面栏只写谁开口什么动作。'+
       '语速跟着情绪走：激动吐槽抢白可以快，不硬卡字数。</div>';
@@ -279,7 +280,8 @@ main{flex:1 1 auto;min-width:0;padding:16px 22px 90px}
       return (a.id+" "+a.name+" "+a.pos).toLowerCase().indexOf(KW)>=0;
     });
     var main = '<div class="banner"><b>生图提示词 · '+D.assets.length+' 条</b> '+
-      '人物基准卡是锁脸唯一锚点，后续状态一律以本卡图生图。风格锚定：暖调、明亮、高饱和、刺血石般鲜亮跳脱。'+
+      '<b>类型：次写实（半写实），不是动漫。</b>人物比例接近真人、真实皮肤质感与光影、真实景深，像高质感影视剧剧照；'+
+      '风格：暖调、明亮、高饱和、刺血石般鲜亮跳脱。人物基准卡是锁脸唯一锚点，后续状态一律以本卡图生图。'+
       '带字道具出空白底版，文字后期压。</div>';
     if(!list.length){ main += '<div class="empty">没有匹配的素材</div>'; }
     list.forEach(function(a){
