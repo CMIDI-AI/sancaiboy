@@ -105,6 +105,18 @@ main{flex:1 1 auto;min-width:0;padding:16px 22px 90px}
 .row.snd{background:#f6fbff;border-left:2.5px solid #cfe5f8;padding:7px 11px;border-radius:0 9px 9px 0}
 .row.neg{color:#b09a84;font-size:11.5px}
 
+/* 逐镜挂图 */
+.res{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 2px}
+.rs{width:132px;cursor:zoom-in;border:1px solid var(--line);border-radius:8px;overflow:hidden;
+  background:#fffdf8;transition:.14s;position:relative}
+.rs:hover{border-color:var(--hot);box-shadow:0 2px 10px rgba(200,140,70,.16)}
+.rs img{display:block;width:100%;height:74px;object-fit:cover}
+.rs .rl{font-size:9.5px;color:#a8815a;padding:2px 5px;display:flex;justify-content:space-between;gap:4px;
+  background:#fff8ec;line-height:1.5}
+.rs .rl b{color:var(--hot);font-weight:700;letter-spacing:.2px}
+.noimg{font-size:11.5px;color:#c08a5a;background:#fff6ec;border:1px dashed #f0d2ae;
+  border-radius:8px;padding:8px 11px;margin:8px 0 2px}
+
 /* 生图素材卡 */
 .asset{background:#fff;border:1px solid var(--line);border-radius:13px;padding:15px 17px;margin-bottom:11px}
 .asset:hover{border-color:#f0cfa4;box-shadow:0 3px 14px rgba(200,140,70,.08)}
@@ -115,7 +127,20 @@ main{flex:1 1 auto;min-width:0;padding:16px 22px 90px}
 .asset .ap{font-size:12.5px;line-height:1.85;color:#4a3c2e;background:#fffdf8;border-radius:9px;
   padding:10px 12px;border-left:2.5px solid #f5822a;white-space:pre-wrap;word-break:break-word}
 .asset .an{font-size:11.5px;line-height:1.75;color:#a08a74;margin-top:8px;padding-left:2px}
+.aimg{display:block;width:100%;max-width:520px;border-radius:10px;border:1px solid var(--line);
+  cursor:zoom-in;margin:2px 0 11px;background:#fffdf8}
+.aimg:hover{border-color:var(--hot)}
+.asset .desc{font-size:12px;color:#7a6650;line-height:1.8;background:#fffaf2;border-radius:8px;
+  padding:8px 11px;margin-bottom:6px;border-left:2.5px solid #e8c9a0}
+.redo{font-size:11px;padding:2px 9px;border-radius:20px;background:#ffe9e4;color:#d0442b;
+  border:1px solid #f7c4b8;font-weight:700}
 .empty{text-align:center;color:var(--dim2);padding:60px 20px;font-size:13px}
+
+/* 大图 */
+#lb{position:fixed;inset:0;background:rgba(38,26,16,.9);display:none;z-index:99;
+  align-items:center;justify-content:center;padding:28px;cursor:zoom-out}
+#lb.on{display:flex}
+#lb img{max-width:96vw;max-height:92vh;border-radius:8px;box-shadow:0 12px 50px rgba(0,0,0,.5)}
 @media(max-width:820px){
   nav#eps{display:none}
   main{padding:12px 12px 70px}
@@ -153,6 +178,8 @@ main{flex:1 1 auto;min-width:0;padding:16px 22px 90px}
   <nav id="eps"></nav>
   <main id="main"></main>
 </div>
+
+<div id="lb"><img id="lbi" alt=""></div>
 
 <script>
 (function(){
@@ -202,6 +229,7 @@ main{flex:1 1 auto;min-width:0;padding:16px 22px 90px}
       .then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); })
       .then(function(d){
         D=d;
+        d.assets.forEach(function(a){ AMAP[a.id]=a; });
         document.getElementById("stats").textContent =
           d.meta.episodes+" 集 · "+d.meta.shots+" 镜 · "+(d.meta.seconds/60).toFixed(1)+" 分钟";
         document.getElementById("c1").textContent=d.meta.shots;
@@ -227,6 +255,13 @@ main{flex:1 1 auto;min-width:0;padding:16px 22px 90px}
     return hay.indexOf(KW)>=0;
   }
 
+  var AMAP = {};
+  function aname(id){
+    var a=AMAP[id];
+    if(a && a.name) return a.name;
+    return id;
+  }
+
   function shotHTML(s){
     var pills = "";
     if(s["景别"]) pills += '<span class="pill sh">'+esc(s["景别"])+'</span>';
@@ -243,6 +278,20 @@ main{flex:1 1 auto;min-width:0;padding:16px 22px 90px}
     h += '<button class="cp" data-copy="'+esc(s.id)+'">复制</button></div>';
     h += '<div class="sbody"><div class="meta">'+pills+'</div>';
 
+    // 挂图缩略图
+    var imgs=s.imgs||[];
+    if(imgs.length){
+      h += '<div class="res">';
+      imgs.forEach(function(x,i){
+        h += '<div class="rs" data-full="img/'+esc(x.id)+'.jpg" title="'+esc(x.id+' '+aname(x.id))+'">'+
+             '<img src="thumbs/'+esc(x.id)+'.jpg" loading="lazy" alt="'+esc(x.id)+'">'+
+             '<div class="rl"><b>图'+["一","二","三","四","五"][i]+'</b><span>'+esc(x.role)+'</span></div></div>';
+      });
+      h += '</div>';
+    }else if((s["场景"]||"").indexOf("SCN011")>=0){
+      h += '<div class="noimg">SCN011 机位图待返修中，此镜暂无图一（详见返修清单）</div>';
+    }
+
     if(s["镜头"]) h += '<div class="row"><span class="k">机位</span>'+esc(s["镜头"])+'</div>';
     if(s["参考图"]) h += '<div class="row"><span class="k">挂图</span>'+esc(s["参考图"])+'</div>';
     if(s["画面"]) h += '<div class="row txt"><span class="k">画面</span>'+esc(s["画面"])+'</div>';
@@ -257,7 +306,8 @@ main{flex:1 1 auto;min-width:0;padding:16px 22px 90px}
     var nav="", main="";
     main = '<div class="banner"><b>种子工程 · 第一卷（第 1—12 集）</b> '+
       '<b>次写实</b> · 暖调明亮高饱和喜剧。'+
-      '每条提示词含【景别 / 机位 / 人物 / 场景 / 挂图 / 画面 / 光影 / 声音 / 负面】九字段。'+
+      '每条提示词含【景别 / 机位 / 人物 / 场景 / 挂图 / 画面 / 光影 / 声音 / 负面】九字段，左侧为该镜要上传的参考图（点开看大图）。'+
+      '挂图规则：图一＝机位图（景别/对象对不上就退回场景空镜，绝不硬挂），图二起＝人物卡。'+
       '台词原文只在声音栏写一次（配音色语速语气），画面栏只写谁开口什么动作。'+
       '语速跟着情绪走：激动吐槽抢白可以快，不硬卡字数。</div>';
 
@@ -272,29 +322,38 @@ main{flex:1 1 auto;min-width:0;padding:16px 22px 90px}
     document.getElementById("eps").innerHTML=nav;
     document.getElementById("main").innerHTML=main;
     bindCopy();
+    bindZoom();
   }
 
   function renderAssets(){
     var list = D.assets.filter(function(a){
       if(!KW) return true;
-      return (a.id+" "+a.name+" "+a.pos).toLowerCase().indexOf(KW)>=0;
+      return (a.id+" "+a.name+" "+a.pos+" "+(a.desc||"")).toLowerCase().indexOf(KW)>=0;
     });
-    var main = '<div class="banner"><b>生图提示词 · '+D.assets.length+' 条</b> '+
+    var withimg = D.assets.filter(function(a){return a.img;}).length;
+    var main = '<div class="banner"><b>生图素材 · '+D.assets.length+' 条（已出图 '+withimg+' 张）</b> '+
       '<b>类型：次写实（半写实），不是动漫。</b>人物比例接近真人、真实皮肤质感与光影、真实景深，像高质感影视剧剧照；'+
       '风格：暖调、明亮、高饱和、刺血石般鲜亮跳脱。人物基准卡是锁脸唯一锚点，后续状态一律以本卡图生图。'+
       '带字道具出空白底版，文字后期压。</div>';
+    main += '<div class="banner" style="background:#fff5f2;border-color:#f7c4b8">'+
+      '<b>返修中：SCN011 整组 4 张</b>（论坛/直播间/系统弹窗空镜与机位）——'+
+      '出图有手入画、屏幕内容是宠物博主，判定不合格，已下架待返修。清单见 <b>04_生图/返修清单_20261022.md</b>。</div>';
     if(!list.length){ main += '<div class="empty">没有匹配的素材</div>'; }
     list.forEach(function(a){
       main += '<div class="asset"><div class="ah"><b>'+esc(a.id)+' '+esc(a.name)+'</b>'+
         '<span class="k">'+esc(a.kind)+'</span>'+
-        '<button class="cp" data-copyasset="'+esc(a.id)+'">复制正向</button></div>'+
-        '<div class="ap">'+esc(a.pos)+'</div>'+
-        (a.neg?'<div class="an"><b>负面：</b>'+esc(a.neg)+'</div>':'')+
-        '</div>';
+        (a.redobox?'<span class="redo">待返修 · 图已下架</span>':'')+
+        (a.pos?'<button class="cp" data-copyasset="'+esc(a.id)+'">复制正向</button>':'')+'</div>';
+      if(a.img) main += '<img class="aimg" src="thumbs/'+esc(a.id)+'.jpg" data-full="img/'+esc(a.id)+'.jpg" loading="lazy" alt="'+esc(a.id)+'">';
+      if(a.desc) main += '<div class="desc">'+esc(a.desc)+'</div>';
+      if(a.pos) main += '<div class="ap">'+esc(a.pos)+'</div>';
+      if(a.neg) main += '<div class="an"><b>负面：</b>'+esc(a.neg)+'</div>';
+      main += '</div>';
     });
     document.getElementById("eps").innerHTML="";
     document.getElementById("main").innerHTML=main;
     bindCopy();
+    bindZoom();
   }
 
   function render(){
@@ -354,6 +413,20 @@ main{flex:1 1 auto;min-width:0;padding:16px 22px 90px}
       };
     });
   }
+
+  // ---------- 大图 ----------
+  var lb=document.getElementById("lb"), lbi=document.getElementById("lbi");
+  function bindZoom(){
+    document.querySelectorAll("[data-full]").forEach(function(el){
+      el.onclick=function(e){
+        e.preventDefault(); e.stopPropagation();
+        lbi.src=el.getAttribute("data-full");
+        lb.classList.add("on");
+      };
+    });
+  }
+  lb.onclick=function(){ lb.classList.remove("on"); lbi.src=""; };
+  document.addEventListener("keydown",function(e){ if(e.key==="Escape"){ lb.classList.remove("on"); } });
 
   // ---------- 标签 / 搜索 ----------
   document.querySelectorAll(".tab").forEach(function(t){
