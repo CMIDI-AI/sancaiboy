@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>散财童子 · 第一卷提示词台</title>
+<link rel="icon" href="data:,">
+<style>
+:root{
+  --bg:#fffaf2; --panel:#ffffff; --panel2:#fff5e8; --line:#f0dfc8;
+  --txt:#2e2419; --dim:#8a7663; --dim2:#b09a84;
+  --hot:#e8563f; --hot2:#f58220; --gold:#e8a33f; --ok:#3aa76d;
+  --tag:#fff1dd;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:14px;line-height:1.65;
+}
+button{font-family:inherit;cursor:pointer;border:0}
+
+/* ---------- 密码门禁 ---------- */
+#gate{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#fff6e8 0%,#ffe9cc 55%,#ffd9b0 100%);padding:20px}
+#gate .bx{position:relative;width:100%;max-width:390px;background:#fff;
+  border:1px solid #f2dec2;border-radius:18px;padding:34px 30px;
+  box-shadow:0 18px 50px rgba(190,120,50,.16)}
+#gate .bd{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
+#gate .bd b{font-size:29px;letter-spacing:2px;font-weight:800;color:#2e2419}
+#gate .bd span{font-size:12px;color:var(--hot);letter-spacing:3px}
+#gate p{color:var(--dim);font-size:12.5px;line-height:1.75;margin:0 0 22px}
+#gate label{display:block;font-size:12px;color:var(--dim);margin-bottom:8px;letter-spacing:1px}
+#gate input{width:100%;padding:13px 14px;border-radius:11px;border:1px solid #eddcc4;
+  background:#fffdf9;color:var(--txt);font-size:14px;outline:none;transition:.15s}
+#gate input:focus{border-color:var(--hot);box-shadow:0 0 0 3px rgba(232,86,63,.13)}
+#gate button{width:100%;margin-top:15px;padding:13px;border-radius:11px;cursor:pointer;
+  background:linear-gradient(135deg,#f5822a,#e8563f);color:#fff;font-size:14.5px;font-weight:600;
+  letter-spacing:1px}
+#gate button:hover{filter:brightness(1.05)}
+#gate .m{min-height:20px;margin-top:11px;font-size:12.5px;color:#e0503a}
+#gate .f{margin-top:18px;font-size:11px;color:#c0a98d;line-height:1.7}
+
+/* ---------- 顶栏 ---------- */
+.top{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:13px;flex-wrap:wrap;
+  padding:11px 20px;background:rgba(255,250,242,.96);border-bottom:1px solid var(--line);
+  backdrop-filter:blur(12px)}
+.brand{display:flex;align-items:baseline;gap:9px;flex:0 0 auto}
+.brand b{font-size:20px;letter-spacing:1.5px;font-weight:800}
+.brand span{font-size:11.5px;color:var(--hot);letter-spacing:2px}
+.stats{font-size:11.5px;color:var(--dim2);letter-spacing:.4px}
+.top .sp{flex:1 1 auto}
+#q{width:220px;padding:8px 12px;border-radius:9px;border:1px solid var(--line);
+  background:#fff;color:var(--txt);font-size:13px;outline:none;transition:.15s}
+#q:focus{border-color:var(--hot);box-shadow:0 0 0 3px rgba(232,86,63,.12)}
+.tabs{display:flex;gap:2px;background:#fff5e8;border:1px solid var(--line);border-radius:9px;padding:2px}
+.tab{padding:6px 13px;border:0;border-radius:7px;background:transparent;color:var(--dim);font-size:12.5px}
+.tab.on{background:linear-gradient(135deg,#f5822a,#e8563f);color:#fff;font-weight:600}
+
+/* ---------- 布局 ---------- */
+.wrap{display:flex;align-items:flex-start;max-width:1520px;margin:0 auto}
+nav#eps{position:sticky;top:56px;flex:0 0 150px;padding:14px 8px 40px 12px;
+  max-height:calc(100vh - 56px);overflow-y:auto}
+nav#eps a{display:block;padding:7px 11px;border-radius:8px;color:var(--dim);font-size:12.5px;
+  margin-bottom:2px;transition:.13s;border:1px solid transparent}
+nav#eps a:hover{background:#fff2e0;color:var(--txt)}
+nav#eps a.on{background:#fff0d8;color:var(--hot);font-weight:600;border-color:#f6dcbb}
+main{flex:1 1 auto;min-width:0;padding:16px 22px 90px}
+
+.banner{padding:11px 15px;border:1px solid #f6dcbb;border-radius:11px;background:#fffaf0;
+  font-size:12.5px;color:#8a7663;line-height:1.8;margin:0 0 14px}
+.banner b{color:#e8563f;font-weight:600}
+
+.eph{margin:20px 0 10px;display:flex;align-items:baseline;gap:11px;flex-wrap:wrap}
+.eph h2{margin:0;font-size:16.5px;letter-spacing:.5px}
+.eph .n{font-size:12px;color:var(--dim2)}
+.eph .t{font-size:12px;color:var(--dim)}
+
+.shot{display:grid;grid-template-columns:74px 1fr;gap:13px;
+  background:#fff;border:1px solid var(--line);border-radius:13px;padding:13px 15px;margin-bottom:9px;
+  transition:.15s}
+.shot:hover{border-color:#f0cfa4;box-shadow:0 3px 14px rgba(200,140,70,.08)}
+.sid{display:flex;flex-direction:column;gap:5px;align-items:flex-start}
+.sid .no{font-size:13.5px;font-weight:800;color:var(--hot);letter-spacing:.4px}
+.sid .sec{font-size:10.5px;color:#fff;background:linear-gradient(135deg,#f5822a,#e8563f);
+  padding:1.5px 7px;border-radius:20px;font-weight:600}
+.sid .cp{font-size:10px;color:var(--dim2);border:1px solid var(--line);border-radius:6px;
+  padding:2px 6px;background:#fffdf8}
+.sid .cp:hover{border-color:var(--hot);color:var(--hot)}
+
+.sbody{min-width:0}
+.meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:7px}
+.pill{font-size:10.5px;padding:2px 8px;border-radius:20px;background:#fff3e2;
+  color:#a8815a;border:1px solid #f6e0c4;white-space:nowrap}
+.pill.chr{background:#ffefe4;color:#d9663f;border-color:#f8d3bc}
+.pill.scn{background:#eef6ff;color:#4a7fb5;border-color:#d3e5f8}
+.pill.sh{background:#f3f0ff;color:#7361b5;border-color:#e0d9f8}
+.pill.cam{background:#f0f8f1;color:#4f9060;border-color:#d5ebd8}
+
+.row{margin:6px 0;font-size:13px;line-height:1.8;color:#3d3025}
+.row .k{display:inline-block;min-width:46px;color:var(--dim2);font-size:11.5px;letter-spacing:.5px}
+.row.txt{background:#fffdf8;border-left:2.5px solid #f8d9b5;padding:7px 11px;border-radius:0 9px 9px 0;margin:8px 0}
+.row.snd{background:#f6fbff;border-left:2.5px solid #cfe5f8;padding:7px 11px;border-radius:0 9px 9px 0}
+.row.neg{color:#b09a84;font-size:11.5px}
+
+/* 生图素材卡 */
+.asset{background:#fff;border:1px solid var(--line);border-radius:13px;padding:15px 17px;margin-bottom:11px}
+.asset:hover{border-color:#f0cfa4;box-shadow:0 3px 14px rgba(200,140,70,.08)}
+.asset .ah{display:flex;align-items:center;gap:9px;margin-bottom:9px;flex-wrap:wrap}
+.asset .ah b{font-size:14.5px;color:#2e2419}
+.asset .ah .k{font-size:10.5px;padding:2px 8px;border-radius:20px;background:#fff1dd;
+  color:#c07a35;border:1px solid #f6dcbb}
+.asset .ap{font-size:12.5px;line-height:1.85;color:#4a3c2e;background:#fffdf8;border-radius:9px;
+  padding:10px 12px;border-left:2.5px solid #f5822a;white-space:pre-wrap;word-break:break-word}
+.asset .an{font-size:11.5px;line-height:1.75;color:#a08a74;margin-top:8px;padding-left:2px}
+.empty{text-align:center;color:var(--dim2);padding:60px 20px;font-size:13px}
+@media(max-width:820px){
+  nav#eps{display:none}
+  main{padding:12px 12px 70px}
+  .shot{grid-template-columns:56px 1fr;padding:11px 12px}
+  #q{width:140px}
+}
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="bx">
+    <div class="bd"><b>散财童子</b><span>提示词台</span></div>
+    <p>《散财童子，花不完就完了》第一卷 · 143 镜分镜提示词与生图提示词。<br>需密码进入。</p>
+    <label for="gp">访问密码</label>
+    <input id="gp" type="password" autocomplete="current-password" placeholder="请输入密码" autofocus>
+    <button id="gb">进入</button>
+    <div class="m" id="gm"></div>
+    <div class="f">内部使用 · 请勿外传</div>
+  </div>
+</div>
+
+<div class="top" id="top" style="display:none">
+  <div class="brand"><b>散财童子</b><span>提示词台</span></div>
+  <div class="stats" id="stats"></div>
+  <div class="sp"></div>
+  <input id="q" placeholder="搜索镜号 / 人物 / 台词…">
+  <div class="tabs">
+    <button class="tab on" data-tab="eps">按集 · <span id="c1">0</span> 镜</button>
+    <button class="tab" data-tab="assets">生图素材 <span id="c2">0</span></button>
+  </div>
+</div>
+
+<div class="wrap" id="wrap" style="display:none">
+  <nav id="eps"></nav>
+  <main id="main"></main>
+</div>
+
+<script>
+(function(){
+  var D=null, TAB="eps", KW="";
+
+  var GATE_KEY="sancaiboy_ok";
+  var GATE_HASH="sancaiboy::cfh0872753::v1";
+
+  function h(s){
+    var x=0; for(var i=0;i<s.length;i++){x=((x<<5)-x)+s.charCodeAt(i);x|=0;}
+    return "h"+x;
+  }
+  var H=h(GATE_HASH);
+
+  var g=document.getElementById("gate");
+  var gp=document.getElementById("gp");
+  var gb=document.getElementById("gb");
+  var gm=document.getElementById("gm");
+
+  function openSite(){
+    g.style.display="none";
+    document.getElementById("top").style.display="flex";
+    document.getElementById("wrap").style.display="flex";
+    boot();
+  }
+
+  try{ if(localStorage.getItem(GATE_KEY)===H){ openSite(); } }catch(e){}
+
+  function tryGate(){
+    var v=gp.value.trim();
+    if(h("sancaiboy::"+v+"::v1")===H){
+      try{ localStorage.setItem(GATE_KEY,H); }catch(e){}
+      gm.textContent="";
+      openSite();
+    }else{
+      gm.textContent="密码不正确";
+      gp.select();
+    }
+  }
+  gb.addEventListener("click",tryGate);
+  gp.addEventListener("keydown",function(e){ if(e.key==="Enter") tryGate(); });
+
+  // ---------- 数据加载 ----------
+  function boot(){
+    if(D){ render(); return; }
+    fetch("./data.json?v="+(localStorage.getItem("sb_dv")||"1"))
+      .then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); })
+      .then(function(d){
+        D=d;
+        document.getElementById("stats").textContent =
+          d.meta.episodes+" 集 · "+d.meta.shots+" 镜 · "+(d.meta.seconds/60).toFixed(1)+" 分钟";
+        document.getElementById("c1").textContent=d.meta.shots;
+        document.getElementById("c2").textContent=d.meta.assets;
+        render();
+      })
+      .catch(function(e){
+        document.getElementById("main").innerHTML=
+          '<div class="empty">数据加载失败：'+e.message+'</div>';
+      });
+  }
+
+  // ---------- 渲染 ----------
+  function esc(s){
+    return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  }
+
+  function match(s){
+    if(!KW) return true;
+    var hay = (s.id+" "+(s["人物"]||"")+" "+(s["场景"]||"")+" "+(s["画面"]||"")+" "+
+      (s["声音"]||"")+" "+(s["景别"]||"")+" "+(s["镜头"]||"")).toLowerCase();
+    return hay.indexOf(KW)>=0;
+  }
+
+  function shotHTML(s){
+    var pills = "";
+    if(s["景别"]) pills += '<span class="pill sh">'+esc(s["景别"])+'</span>';
+    if(s["场景"]) pills += '<span class="pill scn">'+esc(s["场景"])+'</span>';
+    var chr = (s["人物"]||"").split("、").filter(Boolean);
+    chr.forEach(function(c){
+      if(c && c!=="（无，界面）" && c!=="（无，屏幕）")
+        pills += '<span class="pill chr">'+esc(c)+'</span>';
+    });
+
+    var h = '<div class="shot" id="shot_'+esc(s.id.replace(/ /g,"_"))+'">';
+    h += '<div class="sid"><div class="no">'+esc(s.id)+'</div>';
+    h += '<div class="sec">'+s.sec+'秒</div>';
+    h += '<button class="cp" data-copy="'+esc(s.id)+'">复制</button></div>';
+    h += '<div class="sbody"><div class="meta">'+pills+'</div>';
+
+    if(s["镜头"]) h += '<div class="row"><span class="k">机位</span>'+esc(s["镜头"])+'</div>';
+    if(s["参考图"]) h += '<div class="row"><span class="k">挂图</span>'+esc(s["参考图"])+'</div>';
+    if(s["画面"]) h += '<div class="row txt"><span class="k">画面</span>'+esc(s["画面"])+'</div>';
+    if(s["光影"]) h += '<div class="row"><span class="k">光影</span>'+esc(s["光影"])+'</div>';
+    if(s["声音"]) h += '<div class="row snd"><span class="k">声音</span>'+esc(s["声音"])+'</div>';
+    if(s["负面"]) h += '<div class="row neg"><span class="k">负面</span>'+esc(s["负面"])+'</div>';
+    h += '</div></div>';
+    return h;
+  }
+
+  function renderEps(){
+    var nav="", main="";
+    main = '<div class="banner"><b>种子工程 · 第一卷（第 1—12 集）</b> '+
+      '每条提示词含【景别 / 机位 / 人物 / 场景 / 挂图 / 画面 / 光影 / 声音 / 负面】九字段。'+
+      '台词原文只在声音栏写一次（配音色语速语气），画面栏只写谁开口什么动作。'+
+      '语速跟着情绪走：激动吐槽抢白可以快，不硬卡字数。</div>';
+
+    D.episodes.forEach(function(ep){
+      var vis = ep.shots.filter(match);
+      if(KW && vis.length===0) return;
+      nav += '<a href="#ep'+ep.ep+'" data-ep="'+ep.ep+'">第 '+ep.ep+' 集 <span style="color:#c0a98d">'+ep.shots.length+'</span></a>';
+      main += '<div class="eph" id="ep'+ep.ep+'"><h2>第 '+ep.ep+' 集</h2>'+
+        '<span class="n">'+ep.shots.length+' 镜</span></div>';
+      (KW?vis:ep.shots).forEach(function(s){ main += shotHTML(s); });
+    });
+    document.getElementById("eps").innerHTML=nav;
+    document.getElementById("main").innerHTML=main;
+    bindCopy();
+  }
+
+  function renderAssets(){
+    var list = D.assets.filter(function(a){
+      if(!KW) return true;
+      return (a.id+" "+a.name+" "+a.pos).toLowerCase().indexOf(KW)>=0;
+    });
+    var main = '<div class="banner"><b>生图提示词 · '+D.assets.length+' 条</b> '+
+      '人物基准卡是锁脸唯一锚点，后续状态一律以本卡图生图。风格锚定：暖调、明亮、高饱和、刺血石般鲜亮跳脱。'+
+      '带字道具出空白底版，文字后期压。</div>';
+    if(!list.length){ main += '<div class="empty">没有匹配的素材</div>'; }
+    list.forEach(function(a){
+      main += '<div class="asset"><div class="ah"><b>'+esc(a.id)+' '+esc(a.name)+'</b>'+
+        '<span class="k">'+esc(a.kind)+'</span>'+
+        '<button class="cp" data-copyasset="'+esc(a.id)+'">复制正向</button></div>'+
+        '<div class="ap">'+esc(a.pos)+'</div>'+
+        (a.neg?'<div class="an"><b>负面：</b>'+esc(a.neg)+'</div>':'')+
+        '</div>';
+    });
+    document.getElementById("eps").innerHTML="";
+    document.getElementById("main").innerHTML=main;
+    bindCopy();
+  }
+
+  function render(){
+    if(TAB==="eps") renderEps(); else renderAssets();
+  }
+
+  // ---------- 复制 ----------
+  function copyText(t){
+    if(navigator.clipboard && window.isSecureContext){
+      return navigator.clipboard.writeText(t);
+    }
+    var ta=document.createElement("textarea");
+    ta.value=t; ta.style.position="fixed"; ta.style.opacity="0";
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand("copy"); }catch(e){}
+    document.body.removeChild(ta);
+    return Promise.resolve();
+  }
+
+  function bindCopy(){
+    document.querySelectorAll("[data-copy]").forEach(function(b){
+      b.onclick=function(){
+        var id=b.getAttribute("data-copy");
+        var s=null;
+        D.episodes.forEach(function(e){
+          e.shots.forEach(function(x){ if(x.id===id) s=x; });
+        });
+        if(!s) return;
+        var lines=[
+          "【"+s.id+"】"+s.sec+"秒",
+          "景别："+(s["景别"]||""),
+          "镜头："+(s["镜头"]||""),
+          "人物："+(s["人物"]||""),
+          "场景："+(s["场景"]||""),
+          "参考图："+(s["参考图"]||""),
+          "画面："+(s["画面"]||""),
+          "光影："+(s["光影"]||""),
+          "声音："+(s["声音"]||""),
+          "负面："+(s["负面"]||"")
+        ];
+        copyText(lines.join("\n")).then(function(){
+          var o=b.textContent; b.textContent="已复制"; 
+          setTimeout(function(){ b.textContent=o; },1200);
+        });
+      };
+    });
+    document.querySelectorAll("[data-copyasset]").forEach(function(b){
+      b.onclick=function(){
+        var id=b.getAttribute("data-copyasset");
+        var a=null;
+        D.assets.forEach(function(x){ if(x.id===id) a=x; });
+        if(!a) return;
+        copyText(a.pos).then(function(){
+          var o=b.textContent; b.textContent="已复制";
+          setTimeout(function(){ b.textContent=o; },1200);
+        });
+      };
+    });
+  }
+
+  // ---------- 标签 / 搜索 ----------
+  document.querySelectorAll(".tab").forEach(function(t){
+    t.onclick=function(){
+      document.querySelectorAll(".tab").forEach(function(x){ x.classList.remove("on"); });
+      t.classList.add("on");
+      TAB=t.getAttribute("data-tab");
+      render();
+      window.scrollTo(0,0);
+    };
+  });
+
+  var qt=null;
+  document.getElementById("q").addEventListener("input",function(e){
+    clearTimeout(qt);
+    qt=setTimeout(function(){
+      KW=e.target.value.trim().toLowerCase();
+      render();
+    },220);
+  });
+
+  // 侧栏高亮
+  window.addEventListener("scroll",function(){
+    var links=document.querySelectorAll("nav#eps a");
+    if(!links.length) return;
+    var cur=null;
+    links.forEach(function(a){
+      var el=document.getElementById("ep"+a.getAttribute("data-ep"));
+      if(el && el.getBoundingClientRect().top<140) cur=a;
+    });
+    links.forEach(function(a){ a.classList.remove("on"); });
+    if(cur) cur.classList.add("on");
+  },{passive:true});
+})();
+</script>
+</body>
+</html>
