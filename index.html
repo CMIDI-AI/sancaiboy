@@ -288,8 +288,8 @@ main{flex:1 1 auto;min-width:0;padding:16px 22px 90px}
              '<div class="rl"><b>图'+["一","二","三","四","五"][i]+'</b><span>'+esc(x.role)+'</span></div></div>';
       });
       h += '</div>';
-    }else if((s["场景"]||"").indexOf("SCN011")>=0){
-      h += '<div class="noimg">SCN011 机位图待返修中，此镜暂无图一（详见返修清单）</div>';
+    }else{
+      h += '<div class="noimg">此镜暂无合格参考图（景别/对象无匹配机位，且该场景空镜待补）</div>';
     }
 
     if(s["镜头"]) h += '<div class="row"><span class="k">机位</span>'+esc(s["镜头"])+'</div>';
@@ -335,9 +335,9 @@ main{flex:1 1 auto;min-width:0;padding:16px 22px 90px}
       '<b>类型：次写实（半写实），不是动漫。</b>人物比例接近真人、真实皮肤质感与光影、真实景深，像高质感影视剧剧照；'+
       '风格：暖调、明亮、高饱和、刺血石般鲜亮跳脱。人物基准卡是锁脸唯一锚点，后续状态一律以本卡图生图。'+
       '带字道具出空白底版，文字后期压。</div>';
-    main += '<div class="banner" style="background:#fff5f2;border-color:#f7c4b8">'+
-      '<b>返修中：SCN011 整组 4 张</b>（论坛/直播间/系统弹窗空镜与机位）——'+
-      '出图有手入画、屏幕内容是宠物博主，判定不合格，已下架待返修。清单见 <b>04_生图/返修清单_20261022.md</b>。</div>';
+    main += '<div class="banner" style="background:#f2fbf4;border-color:#c9e8d1">'+
+      '<b>生图已全部返修完成（2026-10-22 21:20）</b>——SCN011 整组 4 张（论坛/直播间/系统弹窗）已换新，'+
+      '贺璋发型重做、快递站机位挪进店内、账单/猫粮/短信屏三张道具重出。72 张全部合格入库。</div>';
     if(!list.length){ main += '<div class="empty">没有匹配的素材</div>'; }
     list.forEach(function(a){
       main += '<div class="asset"><div class="ah"><b>'+esc(a.id)+' '+esc(a.name)+'</b>'+
