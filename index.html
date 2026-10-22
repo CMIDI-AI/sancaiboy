@@ -225,11 +225,12 @@ main{flex:1 1 auto;min-width:0;padding:16px 22px 90px}
   // ---------- 数据加载 ----------
   function boot(){
     if(D){ render(); return; }
-    fetch("./data.json?v="+(localStorage.getItem("sb_dv")||"1"))
+    fetch("./data.json?v="+Date.now())
       .then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); })
       .then(function(d){
         D=d;
         d.assets.forEach(function(a){ AMAP[a.id]=a; });
+        VB = '?v='+(d.meta.build||Date.now());
         document.getElementById("stats").textContent =
           d.meta.episodes+" 集 · "+d.meta.shots+" 镜 · "+(d.meta.seconds/60).toFixed(1)+" 分钟";
         document.getElementById("c1").textContent=d.meta.shots;
@@ -255,6 +256,7 @@ main{flex:1 1 auto;min-width:0;padding:16px 22px 90px}
     return hay.indexOf(KW)>=0;
   }
 
+  var VB = '';   // 图片缓存戳，数据加载后按 build 设置
   var AMAP = {};
   function aname(id){
     var a=AMAP[id];
@@ -283,8 +285,8 @@ main{flex:1 1 auto;min-width:0;padding:16px 22px 90px}
     if(imgs.length){
       h += '<div class="res">';
       imgs.forEach(function(x,i){
-        h += '<div class="rs" data-full="img/'+esc(x.id)+'.jpg" title="'+esc(x.id+' '+aname(x.id))+'">'+
-             '<img src="thumbs/'+esc(x.id)+'.jpg" loading="lazy" alt="'+esc(x.id)+'">'+
+        h += '<div class="rs" data-full="img/'+esc(x.id)+'.jpg'+VB+'" title="'+esc(x.id+' '+aname(x.id))+'">'+
+             '<img src="thumbs/'+esc(x.id)+'.jpg'+VB+'" loading="lazy" alt="'+esc(x.id)+'">'+
              '<div class="rl"><b>图'+["一","二","三","四","五"][i]+'</b><span>'+esc(x.role)+'</span></div></div>';
       });
       h += '</div>';
@@ -344,7 +346,7 @@ main{flex:1 1 auto;min-width:0;padding:16px 22px 90px}
         '<span class="k">'+esc(a.kind)+'</span>'+
         (a.redobox?'<span class="redo">待返修 · 图已下架</span>':'')+
         (a.pos?'<button class="cp" data-copyasset="'+esc(a.id)+'">复制正向</button>':'')+'</div>';
-      if(a.img) main += '<img class="aimg" src="thumbs/'+esc(a.id)+'.jpg" data-full="img/'+esc(a.id)+'.jpg" loading="lazy" alt="'+esc(a.id)+'">';
+      if(a.img) main += '<img class="aimg" src="thumbs/'+esc(a.id)+'.jpg'+VB+'" data-full="img/'+esc(a.id)+'.jpg'+VB+'" loading="lazy" alt="'+esc(a.id)+'">';
       if(a.desc) main += '<div class="desc">'+esc(a.desc)+'</div>';
       if(a.pos) main += '<div class="ap">'+esc(a.pos)+'</div>';
       if(a.neg) main += '<div class="an"><b>负面：</b>'+esc(a.neg)+'</div>';
